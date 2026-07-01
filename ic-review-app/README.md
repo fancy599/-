@@ -7,6 +7,7 @@
 - Python 3.11+
 - Node.js 18+
 - LLM API Key（OpenAI / DeepSeek / 通义等 OpenAI 兼容接口）
+- 百度智能云文档解析 / OCR 的 API Key 与 Secret Key（PDF 识别必需）
 - **`.doc` 旧版 Word**：Windows 建议安装 Microsoft Word，并执行 `pip install pywin32`；或安装 LibreOffice。也可在 Word 中另存为 `.docx` 后上传。
 
 ## 快速开始
@@ -24,8 +25,13 @@ copy .env.example .env
 LLM_API_KEY=你的密钥
 LLM_BASE_URL=https://api.openai.com/v1
 LLM_MODEL=gpt-4o-mini
+PDF_PARSER_PROVIDER=baidu
+BAIDU_OCR_API_KEY=你的百度 OCR API Key
+BAIDU_OCR_SECRET_KEY=你的百度 OCR Secret Key
 AUTO_SEED=true
 ```
+
+> **PDF 识别要求：** 本项目的 PDF 识别链路必须使用百度智能云文档解析 / OCR。上传 PDF 前必须完成以上三项配置；未配置时，请勿将 PDF 解析结果用于正式审查。Word、TXT 等非 PDF 文件不受此项限制。
 
 若报错 `invalid temperature: only 1 is allowed for this model`，在 `.env` 增加：
 

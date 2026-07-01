@@ -44,6 +44,7 @@
 
 - Python 3.11+
 - Node.js 18+
+- 百度智能云文档解析 / OCR 的 API Key 与 Secret Key（PDF 识别必需）
 - 可选：Redis 7（启用异步任务时使用）
 - Windows 解析旧版 `.doc` 时建议安装 Microsoft Word 和 `pywin32`；也可使用 LibreOffice
 
@@ -60,10 +61,25 @@ Copy-Item .env.example .env
 LLM_API_KEY=your-api-key
 LLM_BASE_URL=https://api.openai.com/v1
 LLM_MODEL=gpt-4o-mini
+PDF_PARSER_PROVIDER=baidu
+BAIDU_OCR_API_KEY=your-baidu-api-key
+BAIDU_OCR_SECRET_KEY=your-baidu-secret-key
 AUTO_SEED=true
 ```
 
 生产环境可通过 `CORE_ANALYSER_*` 与 `SOE_EXPERT_*` 分别配置分析模型和专家模型。完整选项见 [`ic-review-app/.env.example`](ic-review-app/.env.example)。
+
+### PDF 识别说明
+
+本项目的 PDF 识别链路必须使用百度智能云文档解析 / OCR。上传 PDF 前，请确保 `.env` 中已经配置：
+
+```env
+PDF_PARSER_PROVIDER=baidu
+BAIDU_OCR_API_KEY=your-baidu-api-key
+BAIDU_OCR_SECRET_KEY=your-baidu-secret-key
+```
+
+未配置百度 OCR 时，请勿将 PDF 解析结果用于正式审查。Word、TXT 等非 PDF 文件不受此项限制。
 
 ### 2. 启动后端
 
