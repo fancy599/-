@@ -1,8 +1,6 @@
 import asyncio
 import json
 import queue
-import shutil
-import threading
 import hashlib
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
@@ -10,20 +8,20 @@ from pathlib import Path
 from urllib.parse import quote
 from typing import Any
 
-from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Query, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, Response, StreamingResponse
 from sqlalchemy.orm import Session
 
+from app import db as db_module
 from app.config import get_settings
 from app.services.clause_excerpt import pick_clause_excerpt
 from app.services.text_normalize import (
     cjk_ratio,
-    extract_readable_excerpt,
     is_low_quality_clause,
     normalize_extracted_text,
 )
 from app.utils.timeutil import as_utc, utc_now
-from app.db import SessionLocal, get_db
+from app.db import get_db
 from app.models import (
     Clause,
     ControlPoint,
@@ -65,7 +63,7 @@ from app.schemas import (
 )
 from app.seed import seed_demo
 from app.services.export import export_task_docx, export_task_html, export_task_xlsx
-from app.services.llm import LLMClient, LLMError
+from app.services.llm import LLMClient
 from app.services.parser import (
     ParseError,
     detect_pdf_complex_table_pages,
@@ -1309,7 +1307,7 @@ _SINGLE_AUDIT_POOL = ThreadPoolExecutor(max_workers=4, thread_name_prefix="singl
 
 def _single_audit_worker(task_id: int, document_id: int) -> None:
     """后台并行执行一份单制度体检：解析 + 确定性缺陷检查，全程独立 DB 会话。"""
-    db = SessionLocal()
+    db = db_module.SessionLocal()
     try:
         task = db.get(ReviewTask, task_id)
         doc = db.get(Document, document_id)
@@ -1342,7 +1340,7 @@ def _single_audit_worker(task_id: int, document_id: int) -> None:
 
 def _single_audit_run_worker(task_id: int, document_id: int, mode: str, template_id: str) -> None:
     """后台执行单制度体检（AI 或确定性）+ 范本缺口；独立 DB 会话，避免占用请求线程与长写锁。"""
-    db = SessionLocal()
+    db = db_module.SessionLocal()
     try:
         task = db.get(ReviewTask, task_id)
         doc = db.get(Document, document_id)
@@ -1529,7 +1527,7 @@ def delete_task(task_id: int, db: Session = Depends(get_db)):
 
 
 def _run_pipeline_thread(task_id: int, from_step: int = 1, mode: str | None = None) -> None:
-    db = SessionLocal()
+    db = db_module.SessionLocal()
     try:
         def on_event(tid, step, agent, status, message, progress):
             publish_event(tid, step, agent, status, message, progress)

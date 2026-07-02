@@ -295,9 +295,9 @@ def export_task_html(db: Session, task: ReviewTask) -> str:
         for d in diffs
     )
     log_rows = "".join(
-        f"<tr><td>{esc(l.reviewer)}</td><td>{esc(_ACTION_LABEL.get(l.action, l.action))}</td>"
-        f"<td>{esc(l.comment)}</td><td class='muted'>{esc(to_local_iso(l.created_at))}</td></tr>"
-        for l in logs
+        f"<tr><td>{esc(log.reviewer)}</td><td>{esc(_ACTION_LABEL.get(log.action, log.action))}</td>"
+        f"<td>{esc(log.comment)}</td><td class='muted'>{esc(to_local_iso(log.created_at))}</td></tr>"
+        for log in logs
     )
     summary = esc(task.report_summary or "（无摘要）")
     return f"""<!DOCTYPE html>

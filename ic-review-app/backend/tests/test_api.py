@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 
 from app.models import Document
 from app.seed import seed_demo
@@ -343,9 +344,17 @@ def test_single_document_audit_finds_design_defects(client, db):
     )
     assert r.status_code == 200
     task = r.json()
-    assert task["status"] == "reviewing"
+    assert task["status"] == "running"
     assert task["group_document_id"] == doc.id
     assert task["subsidiary_document_id"] == doc.id
+
+    # 单制度体检由后台线程执行；轮询任务终态，避免把旧的同步行为写进测试。
+    deadline = time.monotonic() + 5
+    while task["status"] == "running" and time.monotonic() < deadline:
+        time.sleep(0.01)
+        task = client.get(f"/api/tasks/{task['id']}").json()
+
+    assert task["status"] == "reviewing"
     assert "其中高风险 0 项" not in task["report_summary"]
 
     rows = client.get(f"/api/tasks/{task['id']}/diffs").json()
