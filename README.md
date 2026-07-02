@@ -14,6 +14,20 @@
 - 导出 Excel / HTML 审查结果
 - 对缺少证据、复杂 PDF 和高风险差异提供显式提示
 
+## 产品截图
+
+| 我的工作台 | 制度对照检查 |
+|---|---|
+| ![我的工作台](docs/screenshots/01-workbench.png) | ![制度对照检查](docs/screenshots/02-policy-comparison.png) |
+
+| 单份制度体检 | 制度文件管理 |
+|---|---|
+| ![单份制度体检](docs/screenshots/03-single-policy-audit.png) | ![制度文件管理](docs/screenshots/04-policy-library.png) |
+
+### 处理记录
+
+![处理记录](docs/screenshots/05-review-records.png)
+
 ## 技术栈
 
 - 后端：Python、FastAPI、SQLAlchemy、Pydantic、SQLite
@@ -148,3 +162,4 @@ npm run build
 - 不要提交本地数据库和 `uploads` 中的原始制度文件。
 - AI 结果仅作为辅助意见；正式合规判断必须由具备相应职责和专业能力的人员复核。
 - 将项目部署到生产环境前，请补充身份认证、权限控制、审计日志、密钥托管、传输加密和数据生命周期策略。
+
