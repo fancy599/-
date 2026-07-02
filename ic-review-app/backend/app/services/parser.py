@@ -4,9 +4,7 @@ import sys
 import tempfile
 import os
 import re
-import json
 import logging
-import time
 from pathlib import Path
 
 import fitz

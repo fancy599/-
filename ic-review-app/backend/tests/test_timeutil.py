@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from app.utils.timeutil import LOCAL_TZ, as_utc, to_local_iso, utc_now
+from app.utils.timeutil import as_utc, to_local_iso, utc_now
 
 
 def test_utc_now_is_aware():

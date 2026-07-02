@@ -1,17 +1,17 @@
 from __future__ import annotations
-
-raise SystemExit(
-    "Deprecated: this broad domain-level source_basis updater was superseded by "
-    "build_standard_source_basis_review.py + apply_verified_source_basis.py, "
-    "which require item-level evidence verification."
-)
-
 import json
 import re
 import sqlite3
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
+
+
+raise SystemExit(
+    "Deprecated: this broad domain-level source_basis updater was superseded by "
+    "build_standard_source_basis_review.py + apply_verified_source_basis.py, "
+    "which require item-level evidence verification."
+)
 
 
 ROOT = Path(__file__).resolve().parents[3]

@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from app.services.parser import extract_text_from_file, split_text_to_chunks
 
 

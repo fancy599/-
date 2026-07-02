@@ -1,6 +1,4 @@
-import re
 import uuid
-from pathlib import Path
 
 MAX_UPLOAD_BYTES = 100 * 1024 * 1024
 MAX_RAW_TEXT_CHARS = 2_000_000

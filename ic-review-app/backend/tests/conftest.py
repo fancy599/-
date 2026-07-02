@@ -19,7 +19,6 @@ os.environ["PDF_PARSER_PROVIDER"] = "local"
 from app.db import Base, get_db  # noqa: E402
 from app import db as db_module  # noqa: E402
 from app.main import app  # noqa: E402
-from app.services.llm import FakeLLMClient  # noqa: E402
 
 engine = create_engine(
     "sqlite://",
