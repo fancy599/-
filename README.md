@@ -7,12 +7,26 @@
 ## 核心能力
 
 - 支持 `.txt`、`.doc`、`.docx`、`.pdf` 制度文件上传与解析
-- 基于标准控制点库进行制度覆盖检查和差异识别
+- 基于内置 422 条标准控制点进行制度覆盖检查和差异识别
 - 采用 Core Analyser 与 SOE Expert 的分层 AI 审查流程
 - 提供任务进度、Agent 日志、差异对照和人工复核记录
 - 支持集团制度与子公司制度的依赖、变更和例外治理
 - 导出 Excel / HTML 审查结果
 - 对缺少证据、复杂 PDF 和高风险差异提供显式提示
+
+## 产品截图
+
+| 我的工作台 | 制度对照检查 |
+|---|---|
+| ![我的工作台](docs/screenshots/01-workbench.png) | ![制度对照检查](docs/screenshots/02-policy-comparison.png) |
+
+| 单份制度体检 | 制度文件管理 |
+|---|---|
+| ![单份制度体检](docs/screenshots/03-single-policy-audit.png) | ![制度文件管理](docs/screenshots/04-policy-library.png) |
+
+### 处理记录
+
+![处理记录](docs/screenshots/05-review-records.png)
 
 ## 技术栈
 
